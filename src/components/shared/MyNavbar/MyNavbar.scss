@@ -1,0 +1,12 @@
+@import '../../../styles/variables';
+
+.MyNavbar {
+  display: block;
+}
+
+a {
+  color: $favColor;
+  &:hover {
+    color: white;
+  }
+}
