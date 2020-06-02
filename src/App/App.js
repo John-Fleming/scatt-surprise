@@ -4,6 +4,11 @@ import 'firebase/auth';
 import './App.scss';
 
 import Auth from '../components/pages/Auth/Auth';
+import EditScat from '../components/pages/EditScat/EditScat';
+import Home from '../components/pages/Home/Home';
+import NewScat from '../components/pages/NewScat/NewScat';
+import SingleScat from '../components/pages/SingleScat/SingleScat';
+
 import MyNavbar from '../components/shared/MyNavbar/MyNavbar';
 
 import fbConnection from '../helpers/data/connection';
@@ -35,6 +40,10 @@ class App extends React.Component {
         <MyNavbar />
         <h2>Scat Surprise</h2>
         <Auth />
+        <Home />
+        <EditScat />
+        <NewScat />
+        <SingleScat />
       </div>
     );
   }
