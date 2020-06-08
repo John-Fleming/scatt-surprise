@@ -1,33 +1,70 @@
 import React from 'react';
+import { NavLink as RRNavLink } from 'react-router-dom';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+} from 'reactstrap';
+
+import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import './MyNavbar.scss';
 
 class MyNavbar extends React.Component {
+  static propTypes = {
+    authed: PropTypes.bool.isRequired,
+  }
+
+  state = {
+    isOpen: false,
+  }
+
   logMeOut = (e) => {
     e.preventDefault();
     firebase.auth().signOut();
   }
 
+  toggle = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  }
+
   render() {
+    const { isOpen } = this.state;
+
+    const buildNavbar = () => {
+      const { authed } = this.props;
+      if (authed) {
+        return (
+        <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink tag={RRNavLink} to='/home'>Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={RRNavLink} to='/new'>New Scat</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink onClick={this.logMeOut} href="#">Logout</NavLink>
+          </NavItem>
+        </Nav>
+        );
+      }
+      return <Nav className="ml-auto" navbar></Nav>;
+    };
+
     return (
       <div className="myNavbar">
-        <nav className="navbar navbar-expand-lg bg-info">
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a className="navbar-brand" href="#">Scat Surprise</a>
-          {/* eslint-disable-next-line max-len */}
-          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
-                <button className="btn btn-outline-dark" onClick={this.logMeOut}>Logout</button>
-              </li>
-            </ul>
-          </div>
-        </nav>
+        <Navbar color="info" light expand="md">
+          <NavbarBrand href="/">Scat Surprise</NavbarBrand>
+          <NavbarToggler onClick={this.toggle} />
+          <Collapse isOpen={isOpen} navbar>
+            {buildNavbar()}
+          </Collapse>
+        </Navbar>
       </div>
     );
   }

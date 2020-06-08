@@ -62,7 +62,7 @@ class App extends React.Component {
       <div className="App">
         <BrowserRouter>
           <React.Fragment>
-            <MyNavbar />
+            <MyNavbar authed={authed} />
             <div className="container-fluid">
               <div className="row">
                 <Switch>
