@@ -26,7 +26,7 @@ class Home extends React.Component {
   render() {
     const { scats } = this.state;
     const buildScatCards = scats.map((scat) => (
-      <ScatCard scat={scat}/>
+      <ScatCard key={scat.id} scat={scat}/>
     ));
 
     return (

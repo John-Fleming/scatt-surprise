@@ -3,8 +3,10 @@
 
 body {
   background-color: $favColor;
-  color: #B3B8CD;
-  a {
+  h1, h2 {
     color: #B3B8CD;
+  }
+  #app-main {
+    margin: 20px auto;
   }
 }
