@@ -1,4 +1,6 @@
 import React from 'react';
+import authData from '../../../helpers/data/authData';
+import scatData from '../../../helpers/data/scatData';
 import './NewScat.scss';
 
 class NewScat extends React.Component {
@@ -50,6 +52,36 @@ class NewScat extends React.Component {
 
   wasFulfillingChange = (e) => {
     this.setState({ scatWasFulfilling: e.target.checked });
+  }
+
+  saveScat = (e) => {
+    e.preventDefault();
+    const {
+      scatLocation,
+      scatColor,
+      scatShape,
+      scatSize,
+      scatTemperature,
+      scatViscosity,
+      scatWasFulfilling,
+      scatNotes,
+    } = this.state;
+
+    const newScat = {
+      color: scatColor,
+      shape: scatShape,
+      size: scatSize,
+      temperature: scatTemperature * 1,
+      viscosity: scatViscosity,
+      wasFulfilling: scatWasFulfilling,
+      location: scatLocation,
+      notes: scatNotes,
+      uid: authData.getUid(),
+    };
+
+    scatData.postScat(newScat)
+      .then(() => this.props.history.push('/home'))
+      .catch((err) => console.error('could not add new scat: ', err));
   }
 
   render() {
@@ -111,7 +143,7 @@ class NewScat extends React.Component {
           <div className="form-group">
             <label htmlFor="scat-temperature">Temperature</label>
             <input
-              type="text"
+              type="number"
               className="form-control"
               id="scat-temperature"
               value={scatTemperature}
@@ -148,7 +180,7 @@ class NewScat extends React.Component {
             />
             <label className="form-check-label" htmlFor="scat-wasFulfilling">Was it fulfilling?</label>
           </div>
-          <button type="submit" className="btn btn-info mt-3">Submit</button>
+          <button type="submit" className="btn btn-info mt-3" onClick={this.saveScat}>Save Scat</button>
         </form>
       </div>
     );
